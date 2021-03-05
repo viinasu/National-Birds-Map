@@ -2,7 +2,7 @@ birdData =
 {
     "Afghanistan": {
         "birdName": "Golden eagle",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Berkut_photo_by_Igor_Shpilenok.jpeg/90px-Berkut_photo_by_Igor_Shpilenok.jpeg"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/4/4b/%D0%91%D0%B5%D1%80%D0%BA%D1%83%D1%82_%28Aquila_chrysaetos%29.jpg"
     },
     "Andorra": {
         "birdName": "Bearded vulture",
@@ -53,7 +53,7 @@ birdData =
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Common_Kestrel_1.jpg/90px-Common_Kestrel_1.jpg"
     },
     "Belize": {
-        "birdName": "Keel-billed toucan",
+        "birdName": "Keel-billed toucans",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Ramphastos_sulfuratus_-Belize_Zoo-6a-2c.jpg/90px-Ramphastos_sulfuratus_-Belize_Zoo-6a-2c.jpg"
     },
     "Bermuda": {
@@ -218,7 +218,7 @@ birdData =
     },
     "Iran": {
         "birdName": "Common Nightingale",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Nachtigall_%28Lus…ia_megarhynchos%29-2.jpg/90px-Nachtigall_%28Luscinia_megarhynchos%29-2.jpg"
+        "image": "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/168730581/1800.jpg"
     },
     "Iraq": {
         "birdName": "Chukar partridge",
