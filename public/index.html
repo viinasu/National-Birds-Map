@@ -1,0 +1,551 @@
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+  <script src="mydatamaps.world.js"></script> 
+  <script src="app.js"></script> 
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    birgimg {
+      margin: 0 auto;
+      width: 50%;
+    }
+
+    body {
+      background-color : yellow;
+      /*or rgb(19, 132, 147)*/
+    }
+
+    #container {
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    strong {
+      color: rgb(117, 170, 197);
+    }
+
+    .hoverinfo {
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    footer {
+      text-align: right;
+      font-size: 10px;
+      font-family: 'Open Sans', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container" style="position: relative; width: 1000px; height: 600px;"></div>
+
+  <!-- <div id="basic_chloropleth" style="position: relative; width: 500px; height: 300px;"></div> -->
+  <script>
+      var map = new Datamap({
+        element: document.getElementById('container'),
+        data: {
+              "Afghanistan": {
+                  "birdName": "Golden eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Berkut_photo_by_Igor_Shpilenok.jpeg/90px-Berkut_photo_by_Igor_Shpilenok.jpeg"
+              },
+              "Andorra": {
+                  "birdName": "Bearded vulture",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Bartgeier_Gypaetu…Richard_Bartz.jpg/90px-Bartgeier_Gypaetus_barbatus_front_Richard_Bartz.jpg"
+              },
+              "Angola": {
+                  "birdName": "Red-crested turaco",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/RedcrestedTuraco.jpg/90px-RedcrestedTuraco.jpg"
+              },
+              "Anguilla": {
+                  "birdName": "Zenaida dove",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Zenida_aurita1_1_barbados.jpg/90px-Zenida_aurita1_1_barbados.jpg"
+              },
+              "Antigua and Barbuda": {
+                  "birdName": "Magnificent frigatebird",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Male_Frigate_bird.jpg/90px-Male_Frigate_bird.jpg"
+              },
+              "Argentina": {
+                  "birdName": "Rufous hornero",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Furnarius-rufus1.jpg/90px-Furnarius-rufus1.jpg"
+              },
+              "Australia": {
+                  "birdName": "Emu",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Emoe.jpg/90px-Emoe.jpg"
+              },
+              "Austria": {
+                  "birdName": "Barn swallow",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hirundo_rustica0.jpg/90px-Hirundo_rustica0.jpg"
+              },
+              "Bahamas": {
+                  "birdName": "American flamingo",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Caribbean_flamingo.jpg/90px-Caribbean_flamingo.jpg"
+              },
+              "Bahrain": {
+                  "birdName": "Himalayan bulbul",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Himalayan_Bulbul_I_IMG_6480.jpg/90px-Himalayan_Bulbul_I_IMG_6480.jpg"
+              },
+              "Bangladesh": {
+                  "birdName": "Oriental magpie-robin",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Oriental_Magpie_R…ntal_Magpie_Robin_%28Copsychus_saularis%29-_Male_at_Kolkata_I_IMG_3003.jpg"
+              },
+              "Belarus": {
+                  "birdName": "White stork",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/WhiteStorkGaulsh02.jpg/90px-WhiteStorkGaulsh02.jpg"
+              },
+              "Belgium": {
+                  "birdName": "Common kestrel",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Common_Kestrel_1.jpg/90px-Common_Kestrel_1.jpg"
+              },
+              "Belize": {
+                  "birdName": "Keel-billed toucan",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Ramphastos_sulfuratus_-Belize_Zoo-6a-2c.jpg/90px-Ramphastos_sulfuratus_-Belize_Zoo-6a-2c.jpg"
+              },
+              "Bermuda": {
+                  "birdName": "Bermuda petrel",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Pterodroma_cahow.jpg/90px-Pterodroma_cahow.jpg"
+              },
+              "Bhutan": {
+                  "birdName": "Common raven",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Corvus_corax_%28NPS%29.jpg/90px-Corvus_corax_%28NPS%29.jpg"
+              },
+              "Bolivia": {
+                  "birdName": "Andean condor",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Colca-condor-c03.jpg/90px-Colca-condor-c03.jpg"
+              },
+              "Botswana": {
+                  "birdName": "Kori bustard",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Ardeotis_kori_Etosha.JPG/90px-Ardeotis_kori_Etosha.JPG"
+              },
+              "Brazil": {
+                  "birdName": "Rufous-bellied thrush",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Rufiventris2.JPG/90px-Rufiventris2.JPG"
+              },
+              "British Virgin Islands": {
+                  "birdName": "Mourning dove",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Mourning_Dove_2006.jpg/90px-Mourning_Dove_2006.jpg"
+              },
+              "Cambodia": {
+                  "birdName": "Giant ibis",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ThaumantibisGiganteaGronvold.jpg/90px-ThaumantibisGiganteaGronvold.jpg"
+              },
+              "Canada": {
+                  "birdName": "",
+                  "image": "http://static.wikeo.be/files/17002/80px-mysterywhiteegg.png"
+              },
+              "Cape Verde": {
+                  "birdName": "Grey-headed kingfisher",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Greyheadkingfisher.jpg/90px-Greyheadkingfisher.jpg"
+              },
+              "Cayman Islands": {
+                  "birdName": "Grand Cayman parrot",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Amazona_leucocephala_-in_tree-4cp.jpg/90px-Amazona_leucocephala_-in_tree-4cp.jpg"
+              },
+              "Chile": {
+                  "birdName": "Andean condor",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Condor_flying_ove…ca_canyon_in_Peru.jpg/90px-Condor_flying_over_the_Colca_canyon_in_Peru.jpg"
+              },
+              "China": {
+                  "birdName": "Red-crowned crane",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Crane_japan2.JPG/90px-Crane_japan2.JPG"
+              },
+              "urasian tree sparrow": {
+                  "birdName": "P. montanus",
+                  "image": "https:null"
+              },
+              "Colombia": {
+                  "birdName": "Andean condor",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/3/33/Colca-condor-c03.jpg"
+              },
+              "Costa Rica": {
+                  "birdName": "Clay-colored thrush",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Turdus-grayi-001.jpg/90px-Turdus-grayi-001.jpg"
+              },
+              "Ivory Coast": {
+                  "birdName": "White-cheeked turaco",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Tauraco_leucotis.jpg/90px-Tauraco_leucotis.jpg"
+              },
+              "Croatia": {
+                  "birdName": "Common Nightingale",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Nachtigall_%28Lus…ia_megarhynchos%29-2.jpg/90px-Nachtigall_%28Luscinia_megarhynchos%29-2.jpg"
+              },
+              "Cuba": {
+                  "birdName": "Cuban trogon",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Cubaanse_Trogon.jpg/90px-Cubaanse_Trogon.jpg"
+              },
+              "Democratic Republic of the Congo": {
+                  "birdName": "Congo peafowl",
+                  "image": "https://upload.wikimedia.org/wikipedia/en/thumb/8/84/Kongopfau.jpg/90px-Kongopfau.jpg"
+              },
+              "Denmark": {
+                  "birdName": "Mute swan",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Swan.spreads.wings.arp.jpg/90px-Swan.spreads.wings.arp.jpg"
+              },
+              "Dominica": {
+                  "birdName": "Imperial amazon",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Amazona_imperiali…iary-6a-3c.jpg/90px-Amazona_imperialis_-Roseau_-Dominica_-aviary-6a-3c.jpg"
+              },
+              "Dominican Republic": {
+                  "birdName": "Palmchat",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Dulus_dominicus.JPG/90px-Dulus_dominicus.JPG"
+              },
+              "Ecuador": {
+                  "birdName": "Andean condor",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Colca-condor-c03.jpg/90px-Colca-condor-c03.jpg"
+              },
+              "Egypt": {
+                  "birdName": "Golden eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Steinadler_Aquila…ard_Bartz.jpg/90px-Steinadler_Aquila_chrysaetos_closeup1_Richard_Bartz.jpg"
+              },
+              "El Salvador": {
+                  "birdName": "Turquoise-browed motmot",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Guardabarranco.JPG/90px-Guardabarranco.JPG"
+              },
+              "Estonia": {
+                  "birdName": "Barn swallow",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Landsvale.jpg/90px-Landsvale.jpg"
+              },
+              "Faroe Islands": {
+                  "birdName": "Eurasian oystercatcher",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Austernfischer01.jpg/90px-Austernfischer01.jpg"
+              },
+              "Finland": {
+                  "birdName": "Whooper swan",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Singschwan.jpg/90px-Singschwan.jpg"
+              },
+              "France": {
+                  "birdName": "Gallic rooster",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Rooster03.jpg/90px-Rooster03.jpg"
+              },
+              "Germany": {
+                  "birdName": "Golden eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Aquila_chrysaetos_Flickr.jpg/90px-Aquila_chrysaetos_Flickr.jpg"
+              },
+              "Gibraltar": {
+                  "birdName": "Barbary partridge",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Alectoris_barbara_Tenerife.jpg/90px-Alectoris_barbara_Tenerife.jpg"
+              },
+              "Greece": {
+                  "birdName": "Little owl",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Athene_noctua_%28cropped%29.jpg/90px-Athene_noctua_%28cropped%29.jpg"
+              },
+              "Grenada": {
+                  "birdName": "Grenada dove",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Grenadadove1.jpg/90px-Grenadadove1.jpg"
+              },
+              "Guatemala": {
+                  "birdName": "Resplendent quetzal",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Quetzal01.jpg/90px-Quetzal01.jpg"
+              },
+              "Guyana": {
+                  "birdName": "Hoatzin",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Opisthocomus_hoazin.jpg/90px-Opisthocomus_hoazin.jpg"
+              },
+              "Haiti": {
+                  "birdName": "Hispaniolan trogon",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Priotelus_roseigaster.jpg/90px-Priotelus_roseigaster.jpg"
+              },
+              "Honduras": {
+                  "birdName": "Scarlet macaw",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Ara_macao_-Yucatan%2C_Mexico-8a.jpg/90px-Ara_macao_-Yucatan%2C_Mexico-8a.jpg"
+              },
+              "Hungary": {
+                  "birdName": "Saker falcon",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Falco_cherrug_%28Marek_Szczepanek%29.jpg/90px-Falco_cherrug_%28Marek_Szczepanek%29.jpg"
+              },
+              "Iceland": {
+                  "birdName": "Gyrfalcon",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Falco_rusticolus_white_cropped.jpg/90px-Falco_rusticolus_white_cropped.jpg"
+              },
+              "India": {
+                  "birdName": "Indian peacock",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Peacockbench.jpg/90px-Peacockbench.jpg"
+              },
+              "Indonesia": {
+                  "birdName": "Javan hawk-eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Javan_Hawk_Eagle_…%29.jpg/90px-Javan_Hawk_Eagle_%28Spizaetus_bartelsi%29_%28464508083%29.jpg"
+              },
+              "Iran": {
+                  "birdName": "Common Nightingale",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Nachtigall_%28Lus…ia_megarhynchos%29-2.jpg/90px-Nachtigall_%28Luscinia_megarhynchos%29-2.jpg"
+              },
+              "Iraq": {
+                  "birdName": "Chukar partridge",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Alectoris-chukar-001.jpg/90px-Alectoris-chukar-001.jpg"
+              },
+              "Israel": {
+                  "birdName": "Hoopoe",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Upupa_epops_%28Ramat_Gan%29002.jpg/90px-Upupa_epops_%28Ramat_Gan%29002.jpg"
+              },
+              "Italy": {
+                  "birdName": "Italian Sparrow",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Italian_Sparrow_male_and_female.jpg/90px-Italian_Sparrow_male_and_female.jpg"
+              },
+              "Jamaica": {
+                  "birdName": "Doctor bird",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Trochilus_polytmus.jpg/90px-Trochilus_polytmus.jpg"
+              },
+              "Japan": {
+                  "birdName": "Green pheasant",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Phasianus_versicolor_in_field.JPG/90px-Phasianus_versicolor_in_field.JPG"
+              },
+              "Jordan": {
+                  "birdName": "Sinai rosefinch",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Carpodacus_synoicus_male%2801%29.jpg/90px-Carpodacus_synoicus_male%2801%29.jpg"
+              },
+              "Kenya": {
+                  "birdName": "Lilac-breasted roller",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Lilac_Roller.jpg/90px-Lilac_Roller.jpg"
+              },
+              "Latvia": {
+                  "birdName": "White wagtail",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/White-Wagtail.jpg/90px-White-Wagtail.jpg"
+              },
+              "Liberia": {
+                  "birdName": "Garden bulbul",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Pycnonotus_tricolor_Bwindi_NP%2C_Uganda.jpg/90px-Pycnonotus_tricolor_Bwindi_NP%2C_Uganda.jpg"
+              },
+              "Lithuania": {
+                  "birdName": "White stork",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Ciconia_ciconia_1.jpg/90px-Ciconia_ciconia_1.jpg"
+              },
+              "Luxembourg": {
+                  "birdName": "Goldcrest",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Regulus_regulus0.jpg/90px-Regulus_regulus0.jpg"
+              },
+              "Malawi": {
+                  "birdName": "Bar-tailed trogon",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Apaloderma_vittatum1.jpg/50px-Apaloderma_vittatum1.jpg"
+              },
+              "Malaysia": {
+                  "birdName": "Rhinoceros hornbill",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Buceros_rhinoceros_-Nashville_Zoo-8.jpg/90px-Buceros_rhinoceros_-Nashville_Zoo-8.jpg"
+              },
+              "Maldives": {
+                  "birdName": "Oriental turtle dove",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Orientalturtledove.JPG/90px-Orientalturtledove.JPG"
+              },
+              "Malta": {
+                  "birdName": "Blue rock thrush",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Monticola_solitarius_philippensis.JPG/90px-Monticola_solitarius_philippensis.JPG"
+              },
+              "Mauritius": {
+                  "birdName": "Dodo",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Raphus_cucullatus.jpg/90px-Raphus_cucullatus.jpg"
+              },
+              "Mexico": {
+                  "birdName": "Northern crested caracara",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Caracara_cheriway_Roma_TX.jpg/90px-Caracara_cheriway_Roma_TX.jpg"
+              },
+              "olden eagle": {
+                  "birdName": "Aquila chrysaetos",
+                  "image": "https:null"
+              },
+              "Mongolia": {
+                  "birdName": "Saker falcon",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Falco_cherrug_%28Marek_Szczepanek%29.jpg/90px-Falco_cherrug_%28Marek_Szczepanek%29.jpg"
+              },
+              "Montserrat": {
+                  "birdName": "Montserrat oriole",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Icterus_oberi.jpg/90px-Icterus_oberi.jpg"
+              },
+              "Myanmar": {
+                  "birdName": "Grey peacock-pheasant",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Polyplectron_bica…90px-Polyplectron_bicalcaratum_-Birmingham_Nature_Centre%2C_England-8a.jpg"
+              },
+              "Namibia": {
+                  "birdName": "African fish eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/African_fish_eagle_just_caught_fish.jpg/90px-African_fish_eagle_just_caught_fish.jpg"
+              },
+              "  Nepal": {
+                  "birdName": "Himalayan monal",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Monal_I_IMG_4002.jpg/90px-Monal_I_IMG_4002.jpg"
+              },
+              "New Zealand": {
+                  "birdName": "Kiwi",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/TeTuatahianui.jpg/90px-TeTuatahianui.jpg"
+              },
+              "Nicaragua": {
+                  "birdName": "Turquoise-browed motmot",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Motmot1.jpg/90px-Motmot1.jpg"
+              },
+              "Nigeria": {
+                  "birdName": "Black crowned crane",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Black_crowned_crane.jpg/90px-Black_crowned_crane.jpg"
+              },
+              "Norway": {
+                  "birdName": "White-throated dipper",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Cinclus_cinclus_R%28ThKraft%29.jpg/90px-Cinclus_cinclus_R%28ThKraft%29.jpg"
+              },
+              "Pakistan": {
+                  "birdName": "Chukar partridge",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/National_bird_of_Pakistan.jpg/90px-National_bird_of_Pakistan.jpg"
+              },
+              "haheen falcon (Heritage bird)": {
+                  "birdName": "Falco peregrinus peregrinator",
+                  "image": "https:null"
+              },
+              "Palestine": {
+                  "birdName": "Palestine sunbird",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Palestine_Sunbird_standing_on_fence.jpg/90px-Palestine_Sunbird_standing_on_fence.jpg"
+              },
+              "Panama": {
+                  "birdName": "Harpy eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/DirkvdM_big_bird.jpg/90px-DirkvdM_big_bird.jpg"
+              },
+              "Papua New Guinea": {
+                  "birdName": "Raggiana bird of paradise",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Raggiana_Bird-of-Paradise_wild_5.jpg/90px-Raggiana_Bird-of-Paradise_wild_5.jpg"
+              },
+              "Paraguay": {
+                  "birdName": "Bare-throated bellbird",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Procnias_nudicollis_-captivity-4.jpg/90px-Procnias_nudicollis_-captivity-4.jpg"
+              },
+              "Peru": {
+                  "birdName": "Andean cock-of-the-rock",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Rupicola_peruviana_%28male%29_-San_Diego_Zoo-8a.jpg"
+              },
+              "Philippines": {
+                  "birdName": "Philippine eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Sir_Arny%28Philippine_Eagle%29.jpg/90px-Sir_Arny%28Philippine_Eagle%29.jpg"
+              },
+              "Puerto Rico": {
+                  "birdName": "Puerto Rican spindalis",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/PuertoRicanSpindalis.jpg/90px-PuertoRicanSpindalis.jpg"
+              },
+              "Romania": {
+                  "birdName": "Great white pelican",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Whitepelican_edit_shadowlift.jpg/90px-Whitepelican_edit_shadowlift.jpg"
+              },
+              "Russia": {
+                  "birdName": "Tundra swan",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Cygnus_bewickii_01.jpg/90px-Cygnus_bewickii_01.jpg"
+              },
+              "Saint Helena": {
+                  "birdName": "Saint Helena plover",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Charadrius_sanctaehelenae_%281%29.jpg/90px-Charadrius_sanctaehelenae_%281%29.jpg"
+              },
+              "Saint Kitts and Nevis": {
+                  "birdName": "Brown pelican",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Pelecanus_Occidentalis_KW_1.JPG/90px-Pelecanus_Occidentalis_KW_1.JPG"
+              },
+              "Saint Vincent and the Grenadines": {
+                  "birdName": "St Vincent parrot",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Amazona_guildingi…0px-Amazona_guildingii_-Botanical_Gardens_-Kingstown_-Saint_Vincent-8a.jpg"
+              },
+              "Scotland": {
+                  "birdName": "Golden eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/GoldenEagle-Nova.jpg/90px-GoldenEagle-Nova.jpg"
+              },
+              "Serbia": {
+                  "birdName": "Griffon vulture",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Gyps_fulvus_01_by_Line1.jpg/90px-Gyps_fulvus_01_by_Line1.jpg"
+              },
+              "Singapore": {
+                  "birdName": "Crimson sunbird",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Crimson_sunbird.jpg/90px-Crimson_sunbird.jpg"
+              },
+              "South Africa": {
+                  "birdName": "Blue crane",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Anthropoides_para…eaPCCA20051227-1883B.jpg/90px-Anthropoides_paradiseaPCCA20051227-1883B.jpg"
+              },
+              "South Korea": {
+                  "birdName": "Korean magpie",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Korean_magpie_in_…28side_profile%29.jpg/90px-Korean_magpie_in_Daejeon_%28side_profile%29.jpg"
+              },
+              "South Sudan": {
+                  "birdName": "African fish eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/African_fish_eagle_flying_cropped.jpg/90px-African_fish_eagle_flying_cropped.jpg"
+              },
+              "Spain": {
+                  "birdName": "Spanish imperial eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Aquila_adalberti.jpg/90px-Aquila_adalberti.jpg"
+              },
+              "Sri Lanka": {
+                  "birdName": "Sri Lanka junglefowl",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Thimindu_2009_09_…_Junglefowl_1.JPG/90px-Thimindu_2009_09_04_Yala_Sri_Lanka_Junglefowl_1.JPG"
+              },
+              "Sudan": {
+                  "birdName": "Secretary bird",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Sagittarius_serpe…-Sagittarius_serpentarius_-Tsavo_East_National_Park%2C_Kenya_-flying-8.jpg"
+              },
+              "Swaziland": {
+                  "birdName": "Purple-crested turaco",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Purplecreszed_lourie1.jpg/90px-Purplecreszed_lourie1.jpg"
+              },
+              "Sweden": {
+                  "birdName": "Common blackbird",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Turdus_merula_-garden_wall-8.jpg/90px-Turdus_merula_-garden_wall-8.jpg"
+              },
+              "Thailand": {
+                  "birdName": "Siamese fireback",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Lophura_diardi_-F…2C_USA_-captive-8a.jpg/90px-Lophura_diardi_-Florida%2C_USA_-captive-8a.jpg"
+              },
+              "Trinidad and Tobago": {
+                  "birdName": "Scarlet ibis",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Eudocimus_ruber_%28portrait%29.jpg/90px-Eudocimus_ruber_%28portrait%29.jpg"
+              },
+              "ocrico": {
+                  "birdName": "Ortalis ruficauda",
+                  "image": "https:null"
+              },
+              "Turkey": {
+                  "birdName": "Redwing",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Redwing_Turdus_iliacus.jpg/90px-Redwing_Turdus_iliacus.jpg"
+              },
+              "Uganda": {
+                  "birdName": "East African crowned crane",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Crested_Crane%2C_Bunyonyi%2C_Uganda.jpg/90px-Crested_Crane%2C_Bunyonyi%2C_Uganda.jpg"
+              },
+              "United Arab Emirates": {
+                "birdName": "Peregrine Falcon",
+                "image": "http://imgc.allpostersimages.com/images/P-473-488-90/26/2688/7RLUD00Z/posters/michael-melford-a-portrait-of-a-peregrine-falcon-falco-peregrinus.jpg"
+              },
+              "United Kingdom": {
+                  "birdName": "European robin",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Erithacus_rubecula_with_cocked_head.jpg/90px-Erithacus_rubecula_with_cocked_head.jpg"
+              },
+              "United States of America": {
+                  "birdName": "Bald eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/2010-bald-eagle-kodiak.jpg/90px-2010-bald-eagle-kodiak.jpg"
+              },
+              "Uruguay": {
+                  "birdName": "Southern lapwing",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Vanellus-chilensis-001.jpg/90px-Vanellus-chilensis-001.jpg"
+              },
+              "Venezuela": {
+                  "birdName": "Venezuelan troupial",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Common_Troupial_-_Nashville_Zoo.jpg/90px-Common_Troupial_-_Nashville_Zoo.jpg"
+              },
+              "Zambia": {
+                  "birdName": "African fish eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/African_fish_eagle_just_caught_fish.jpg/90px-African_fish_eagle_just_caught_fish.jpg"
+              },
+              "Zimbabwe": {
+                  "birdName": "African fish eagle",
+                  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Hvidhovedet_afrikansk_%C3%B8rn2.png/90px-Hvidhovedet_afrikansk_%C3%B8rn2.png"
+              }
+            },
+        geographyConfig: {
+          //data is "CHN : {birdName ..., image: ..}"
+          popupTemplate: function(geo, data) {
+            return ['<div class="hoverinfo"> <div class="birdimg"><img src=', data.image, ' width="100px" height="100px"></div> <strong>', geo.properties.name + " ", '</strong>' + data.birdName, ' </div>'].join('');
+          }
+        }
+    });
+                
+  </script>
+  <h1> National Birds of the World </h1>
+  <footer> 
+  Ting Deng <br />
+  D3, DataMap, TopoJSON <br /> 
+  Data Source: Wikipedia </footer>
+</body>
+
+
+
+

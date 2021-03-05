@@ -1,0 +1,26 @@
+{
+  "name": "MKS-solo",
+  "version": "0.0.0",
+  "homepage": "https://github.com/viinasu/MKS-solo",
+  "authors": [
+    "MKS-Student <mks.student@hackreactor.com>"
+  ],
+  "description": "D3 Maps MVP",
+  "main": "index.html",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "d3",
+    "maps"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
